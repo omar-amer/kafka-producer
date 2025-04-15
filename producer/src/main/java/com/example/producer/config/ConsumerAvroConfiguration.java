@@ -18,10 +18,16 @@ import java.util.Map;
 
 public abstract class ConsumerAvroConfiguration {
 
+    protected abstract boolean isActive();
+    protected abstract String groupId();
+    protected abstract String topic();
+
     @PostConstruct
     public void startReading() {
-        buildAndSubscribe();
-        new Thread(this::read).start();
+        if(isActive()) {
+            buildAndSubscribe();
+            new Thread(this::read).start();
+        }
     }
 
     protected KafkaConsumer<Double, Album> consumer;
@@ -53,10 +59,4 @@ public abstract class ConsumerAvroConfiguration {
             consumer.commitSync();
         }
     }
-
-    protected abstract String groupId();
-
-    protected abstract String topic();
-
-
 }

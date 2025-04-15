@@ -7,6 +7,11 @@ import static com.example.producer.avro.Constants.TOPIC;
 @Service
 public class KafkaAvroConsumerService extends ConsumerAvroConfiguration {
     @Override
+    protected boolean isActive() {
+        return false;
+    }
+
+    @Override
     protected String groupId() {
         return "MY-GROUP";
     }

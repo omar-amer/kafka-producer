@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import java.util.Random;
 
+import static com.example.producer.avro.Constants.CONNECT_DISTRIBUTED;
 import static com.example.producer.avro.Constants.TOPIC;
 
 @Service
@@ -35,8 +36,8 @@ public class KafkaAvroService extends AbstractProducerService{
     protected void publish() {
         for (int i = 0; i < 10; i++) {
             double key = Math.floor(Math.random() * 50);
-            Album  value= new Album("RocknRoll",new Random().nextInt(1950,2000 + 1950));
-            ProducerRecord<Double, Album> producerRecord = new ProducerRecord<>(TOPIC, key, value);
+            Album  value= new Album("Use Your Illusion",new Random().nextInt(1950,2000 + 1950));
+            ProducerRecord<Double, Album> producerRecord = new ProducerRecord<>(CONNECT_DISTRIBUTED, key, value);
             kafkaProducer.send(producerRecord, (metadata, e) -> {
                 if (Objects.nonNull(metadata)) {
                     System.out.println("Key: " + producerRecord.key());
